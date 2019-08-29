@@ -9,6 +9,8 @@ import vtkVolume from 'vtk.js/Sources/Rendering/Core/Volume';
 import vtkVolumeMapper from 'vtk.js/Sources/Rendering/Core/VolumeMapper';
 import vtkColorTransferFunction from 'vtk.js/Sources/Rendering/Core/ColorTransferFunction';
 import vtkPiecewiseFunction from 'vtk.js/Sources/Common/DataModel/PiecewiseFunction';
+import runPipelineBrowser from 'itk/runPipelineBrowser';
+import IOTypes from 'itk/IOTypes';
 
 
 
@@ -54,22 +56,40 @@ class K_Manager{
 
         const fileReader = new FileReader();
         const stlReader = vtkSTLReader.newInstance();
-        fileReader.onload = e=>{
-            stlReader.parseAsArrayBuffer(fileReader.result);
-            stlReader.update();
-            const polydata = stlReader.getOutputData();
+        fileReader.onload = async e=>{
+            // stlReader.parseAsArrayBuffer(fileReader.result);
+            // stlReader.update();
+            // const polydata = stlReader.getOutputData();
 
-            const mapper = vtkMapper.newInstance({scalarVisibility:false});
-            mapper.setInputData(polydata);
+            // const mapper = vtkMapper.newInstance({scalarVisibility:false});
+            // mapper.setInputData(polydata);
         
-            const actor = vtkActor.newInstance();
-            actor.setMapper(mapper);
+            // const actor = vtkActor.newInstance();
+            // actor.setMapper(mapper);
         
-            renderer.addActor(actor);
-            renderer.resetCamera();
-            renderWindow.render();
+            // renderer.addActor(actor);
+            // renderer.resetCamera();
+            // renderWindow.render();
+
+            const args = ['thread.stl', 'thread.json']
+            const outputType = [
+                {path : args[1], type : IOTypes.vtkPolyData},
+            ];
+    
+            const inputs = [
+                {path : args[0], type : IOTypes.Binary, data : fileReader.result }
+            ]
+    
+    
+            const result = await runPipelineBrowser(null, 'stlReader', args, outputType, inputs);
+            console.log(result);
         }
+
+        
         fileReader.readAsArrayBuffer(file);
+
+
+
     }
 
     async importVolume(files){
