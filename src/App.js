@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          KIST
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+class App extends Component {
+
+  onImportMesh(e){
+    alert("Import Mesh")
+  }
+
+  onImportVolume(e){
+    alert("Import Volume")
+  }
+
+  render(){
+    return (
+      <div className="App">
+        <div className="App-toolbar">
+          <div className="Button" onClick={e=>{this.onImportMesh(e)}}> Import mesh </div>
+          <div className="Button" onClick={e=>{this.onImportVolume(e)}}> Import Volume </div>
+        </div>
+  
+        <div className="App-renderer">
+          <div className="App-renderer1"/>
+          <div className="App-renderer2"/>
+          <div className="App-renderer3"/>
+          <div className="App-renderer4"/>
+        </div>
+      
+      </div>
+    );
+  }
+  
+};
 
 export default App;

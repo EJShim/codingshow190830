@@ -1,33 +1,74 @@
 .App {
   text-align: center;
+  
+  position:absolute;
+  width:100%;
+  height:100%;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.App-toolbar{
+  position:absolute;
+  width:100%;
+  height:10%;
+  background-color: #172c23;
+  display:flex;
 }
 
-.App-header {
+.App-renderer{
+  position:absolute;
+
+  top:10%;
+  width:100%;
+  height:90%;
   background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+
+.App-renderer1{
+  position:absolute;
+  top:0%;
+  left:0%;
+  width:50%;
+  height:50%;
+  background-color:#ac0a0f;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App-renderer2{
+  position:absolute;
+  top:0%;
+  left:50%;
+  width:50%;
+  height:50%;
+  background-color:#0fa000;
+}
+
+.App-renderer3{
+  position:absolute;
+  top:50%;
+  left:0%;
+  width:50%;
+  height:50%;
+  background-color:#000fa0;
+}
+
+.App-renderer4{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:50%;
+  height:50%;
+  background-color:#fe0d0f;
+}
+
+.Button{
+  width:100px;
+  height:100px;
+  margin-left:10px;
+  background-color:darkblue;
+  color:white;
+  border-radius: 25px;
+}
+
+.Button:hover{
+  background-color:red;
 }
