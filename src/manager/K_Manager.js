@@ -1,9 +1,7 @@
 import vtkGenericRenderWindow from 'vtk.js/Sources/Rendering/Misc/GenericRenderWindow';
 import vtkActor           from 'vtk.js/Sources/Rendering/Core/Actor';
-import vtkConeSource      from 'vtk.js/Sources/Filters/Sources/ConeSource';
 import vtkMapper          from 'vtk.js/Sources/Rendering/Core/Mapper';
 import vtkSTLReader from 'vtk.js/Sources/IO/Geometry/STLReader';
-import PolyData from 'vtk.js/Sources/Common/DataModel/PolyData';
 
 
 class K_Manager{
