@@ -20,9 +20,13 @@ class App extends Component {
 
 
   componentDidMount(){
-    K_Manager.Mgr().setContainer(this.refs['renderer1'])    
+    K_Manager.Mgr().setContainer(this.refs['renderer1']);
   }
 
+  
+  componentDidUpdate(){
+    K_Manager.Mgr().handleResize();
+  }
 
   onImportMesh(e){
     alert("Import Mesh")
@@ -37,9 +41,6 @@ class App extends Component {
     this.mouseDown = true;
   }
 
-  componentDidUpdate(){
-    K_Manager.Mgr().handleResize();
-  }
 
   onMouseMove(e){
     e.preventDefault();

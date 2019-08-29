@@ -23,6 +23,7 @@ class K_Manager{
         this.genericWindow.setContainer(container)
     
         let renderer = this.genericWindow.getRenderer();
+        renderer.setBackground(0.0, 0.0, 0.0);
         let renderWindow = this.genericWindow.getRenderWindow();
     
         const coneSource = vtkConeSource.newInstance({ height: 1.0 });
@@ -35,6 +36,9 @@ class K_Manager{
         renderer.addActor(actor);
         renderer.resetCamera();
         renderWindow.render();
+
+
+        this.handleResize();
     }
 
     handleResize(){
