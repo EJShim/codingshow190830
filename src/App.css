@@ -29,8 +29,7 @@
   top:0%;
   left:0%;
   width:50%;
-  height:50%;
-  background-color:#ac0a0f;
+  height:50%;  
 }
 
 .App-renderer2{
@@ -39,7 +38,7 @@
   left:50%;
   width:50%;
   height:50%;
-  background-color:#0fa000;
+  
 }
 
 .App-renderer3{
@@ -47,8 +46,7 @@
   top:50%;
   left:0%;
   width:50%;
-  height:50%;
-  background-color:#000fa0;
+  height:50%;  
 }
 
 .App-renderer4{
@@ -56,8 +54,7 @@
   top:50%;
   left:50%;
   width:50%;
-  height:50%;
-  background-color:#fe0d0f;
+  height:50%;  
 }
 
 .Button{
