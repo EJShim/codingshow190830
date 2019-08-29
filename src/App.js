@@ -28,12 +28,12 @@ class App extends Component {
     K_Manager.Mgr().handleResize();
   };
 
-  async onImportMesh(e){
+  onImportMesh(e){
     let fileDialog = document.createElement("input");
     fileDialog.setAttribute("type", "file")
     fileDialog.setAttribute("accept", ".stl");
     fileDialog.setAttribute("multiple", false);
-    await fileDialog.addEventListener("change", e=>{
+    fileDialog.addEventListener("change", e=>{
        
        if(e.target.files.length < 1) return;
 
@@ -46,7 +46,21 @@ class App extends Component {
   }
 
   onImportVolume(e){
-    alert("Import Volume")
+    let fileDialog = document.createElement("input");
+    fileDialog.setAttribute("type", "file")
+    fileDialog.setAttribute("accept", ".dcm");
+    fileDialog.setAttribute("multiple", true);
+    fileDialog.addEventListener("change", e=>{
+       
+       if(e.target.files.length < 1) return;
+
+       const files = e.target.files;
+        
+       K_Manager.Mgr().importVolume(files);
+       
+
+    })
+    fileDialog.click();
   }
 
   onMouseDown(e){
