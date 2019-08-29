@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+import K_Manager from 'K_Manager';
+
+
+
 import './App.css';
 
 class App extends Component {
@@ -15,6 +19,11 @@ class App extends Component {
   }
 
 
+  componentDidMount(){
+    K_Manager.Mgr().setContainer(this.refs['renderer1'])    
+  }
+
+
   onImportMesh(e){
     alert("Import Mesh")
   }
@@ -26,6 +35,10 @@ class App extends Component {
   onMouseDown(e){
     e.preventDefault();
     this.mouseDown = true;
+  }
+
+  componentDidUpdate(){
+    K_Manager.Mgr().handleResize();
   }
 
   onMouseMove(e){
@@ -42,7 +55,7 @@ class App extends Component {
       this.setState({
         dividerLeft:updateLeft,
         dividerTop:updateTop,
-      })
+      });
 
     }
   }
@@ -102,6 +115,7 @@ class App extends Component {
             onMouseMove={e=>{this.onMouseMove(e)}}
             onMouseUp={e=>{this.onMouseUp(e)}}>
           <div className="App-renderer1"
+              ref="renderer1"
               style={renderer1Style}/>
           <div className="App-renderer2"
               style={renderer2Style}/>
