@@ -62,7 +62,7 @@
 
 .Button{
   width:100px;
-  height:100px;
+  height:70%;
   margin-left:10px;
   background-color:darkblue;
   color:white;
@@ -71,4 +71,27 @@
 
 .Button:hover{
   background-color:red;
+}
+
+
+.Divider-horizontal{
+  position:absolute;
+  width:100%;
+  height:5px;
+  background-color:black;
+}
+
+.Divider-horizontal:hover{
+  cursor:n-resize;
+}
+
+.Divider-vertical{
+  position:absolute;
+  width:5px;
+  height:100%;  
+  background-color:black;
+}
+
+.Divider-vertical:hover{
+  cursor:e-resize;
 }
