@@ -2,6 +2,9 @@ import vtkGenericRenderWindow from 'vtk.js/Sources/Rendering/Misc/GenericRenderW
 import vtkActor           from 'vtk.js/Sources/Rendering/Core/Actor';
 import vtkConeSource      from 'vtk.js/Sources/Filters/Sources/ConeSource';
 import vtkMapper          from 'vtk.js/Sources/Rendering/Core/Mapper';
+import vtkSTLReader from 'vtk.js/Sources/IO/Geometry/STLReader';
+import PolyData from 'vtk.js/Sources/Common/DataModel/PolyData';
+
 
 class K_Manager{
     static instance;
@@ -24,18 +27,8 @@ class K_Manager{
     
         let renderer = this.genericWindow.getRenderer();
         renderer.setBackground(0.0, 0.0, 0.0);
-        let renderWindow = this.genericWindow.getRenderWindow();
     
-        const coneSource = vtkConeSource.newInstance({ height: 1.0 });
-        const mapper = vtkMapper.newInstance();
-        mapper.setInputConnection(coneSource.getOutputPort());
-    
-        const actor = vtkActor.newInstance();
-        actor.setMapper(mapper);
-    
-        renderer.addActor(actor);
-        renderer.resetCamera();
-        renderWindow.render();
+      
 
 
         this.handleResize();
@@ -43,6 +36,37 @@ class K_Manager{
 
     handleResize(){
         this.genericWindow.resize();
+    }
+
+    importMesh(file){
+
+        let renderer = this.genericWindow.getRenderer();
+        renderer.removeAllViewProps();
+        let renderWindow = this.genericWindow.getRenderWindow();
+
+
+        const fileReader = new FileReader();
+        const stlReader = vtkSTLReader.newInstance();
+        fileReader.onload = e=>{
+            stlReader.parseAsArrayBuffer(fileReader.result);
+            stlReader.update();
+            const polydata = stlReader.getOutputData();
+
+            const mapper = vtkMapper.newInstance({scalarVisibility:false});
+            mapper.setInputData(polydata);
+        
+            const actor = vtkActor.newInstance();
+            actor.setMapper(mapper);
+        
+            renderer.addActor(actor);
+            renderer.resetCamera();
+            renderWindow.render();
+        }
+        fileReader.readAsArrayBuffer(file);
+    }
+
+    ImportVolume(files){
+        console.log(files)
     }
 };
 

@@ -26,10 +26,23 @@ class App extends Component {
   
   componentDidUpdate(){
     K_Manager.Mgr().handleResize();
-  }
+  };
 
-  onImportMesh(e){
-    alert("Import Mesh")
+  async onImportMesh(e){
+    let fileDialog = document.createElement("input");
+    fileDialog.setAttribute("type", "file")
+    fileDialog.setAttribute("accept", ".stl");
+    fileDialog.setAttribute("multiple", false);
+    await fileDialog.addEventListener("change", e=>{
+       
+       if(e.target.files.length < 1) return;
+
+       const file = e.target.files[0];       
+       K_Manager.Mgr().importMesh(file);
+       
+
+    })
+    fileDialog.click();
   }
 
   onImportVolume(e){
