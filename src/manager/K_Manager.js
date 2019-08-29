@@ -11,6 +11,7 @@ import vtkColorTransferFunction from 'vtk.js/Sources/Rendering/Core/ColorTransfe
 import vtkPiecewiseFunction from 'vtk.js/Sources/Common/DataModel/PiecewiseFunction';
 import runPipelineBrowser from 'itk/runPipelineBrowser';
 import IOTypes from 'itk/IOTypes';
+import vtk from 'vtk.js/Sources/vtk';
 
 
 
@@ -61,28 +62,23 @@ class K_Manager{
             // stlReader.update();
             // const polydata = stlReader.getOutputData();
 
-            // const mapper = vtkMapper.newInstance({scalarVisibility:false});
-            // mapper.setInputData(polydata);
-        
-            // const actor = vtkActor.newInstance();
-            // actor.setMapper(mapper);
-        
-            // renderer.addActor(actor);
-            // renderer.resetCamera();
-            // renderWindow.render();
+            
+            const args = ['thread.stl', 'thread.json'];
+            const outputType = [{path : args[1], type : IOTypes.vtkPolyData}];                        
+            const inputs = [{path : args[0], type : IOTypes.Binary, data : new Uint8Array(fileReader.result) }]
+            const result = await runPipelineBrowser(null, 'stlReader', args, outputType, inputs);            
+            const polydata = vtk(result.outputs[0].data);
 
-            const args = ['thread.stl', 'thread.json']
-            const outputType = [
-                {path : args[1], type : IOTypes.vtkPolyData},
-            ];
-    
-            const inputs = [
-                {path : args[0], type : IOTypes.Binary, data : fileReader.result }
-            ]
-    
-    
-            const result = await runPipelineBrowser(null, 'stlReader', args, outputType, inputs);
-            console.log(result);
+
+            const mapper = vtkMapper.newInstance({scalarVisibility:false});
+            mapper.setInputData(polydata);
+        
+            const actor = vtkActor.newInstance();
+            actor.setMapper(mapper);
+        
+            renderer.addActor(actor);
+            renderer.resetCamera();
+            renderWindow.render();
         }
 
         

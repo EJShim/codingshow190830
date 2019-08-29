@@ -16,15 +16,11 @@ int main(int argc, char* argv[]){
         return EXIT_FAILURE;
     }
 
-    std::cout << argv[0] << "," << argv[1] << "," << argv[2] << std::endl;
-
     vtkSmartPointer<vtkSTLReader> stlReader = vtkSmartPointer<vtkSTLReader>::New();
     stlReader->SetFileName(argv[1]);
     stlReader->Update();
 
-
     vtkSmartPointer<vtkPolyData> polyData = stlReader->GetOutput();
-
 
     vtkSmartPointer<vtkJSONDataSetWriter> writer = vtkSmartPointer<vtkJSONDataSetWriter>::New();
     writer->SetFileName(argv[2]);
