@@ -51,10 +51,12 @@ class K_Manager{
 
     importMesh(file){
 
-        let renderer = this.genericWindow.getRenderer();
-        renderer.removeAllViewProps();
+        let renderer = this.genericWindow.getRenderer();        
         let renderWindow = this.genericWindow.getRenderWindow();
 
+
+        renderer.setBackground(1.0, 0.0, 0.0);
+        renderWindow.render();
 
         const fileReader = new FileReader();
         const stlReader = vtkSTLReader.newInstance();
@@ -62,15 +64,15 @@ class K_Manager{
 
             const startTime = new Date()
             
-            stlReader.parse(fileReader.result);
-            stlReader.update();
-            const polydata = stlReader.getOutputData();
+            // stlReader.parse(fileReader.result);
+            // stlReader.update();
+            // const polydata = stlReader.getOutputData();
             
-            // const args = ['thread.stl', 'thread.json'];
-            // const outputType = [{path : args[1], type : IOTypes.vtkPolyData}];                        
-            // const inputs = [{path : args[0], type : IOTypes.Binary, data : new Uint8Array(fileReader.result) }]
-            // const result = await runPipelineBrowser(null, 'stlReader', args, outputType, inputs);            
-            // const polydata = vtk(result.outputs[0].data);
+            const args = ['thread.stl', 'thread.json'];
+            const outputType = [{path : args[1], type : IOTypes.vtkPolyData}];                        
+            const inputs = [{path : args[0], type : IOTypes.Binary, data : new Uint8Array(fileReader.result) }]
+            const result = await runPipelineBrowser(null, 'stlReader', args, outputType, inputs);            
+            const polydata = vtk(result.outputs[0].data);
             
             console.log((new Date() - startTime) / 1000);
 
@@ -82,13 +84,15 @@ class K_Manager{
             const actor = vtkActor.newInstance();
             actor.setMapper(mapper);
         
+            renderer.setBackground(0.0, 0.0, 0.0);
+            renderer.removeAllViewProps();
             renderer.addActor(actor);
             renderer.resetCamera();
             renderWindow.render();
         }
 
         
-        fileReader.readAsText(file);
+        fileReader.readAsArrayBuffer(file);
 
 
 
