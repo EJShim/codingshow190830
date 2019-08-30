@@ -12,6 +12,7 @@ import vtkPiecewiseFunction from 'vtk.js/Sources/Common/DataModel/PiecewiseFunct
 import runPipelineBrowser from 'itk/runPipelineBrowser';
 import IOTypes from 'itk/IOTypes';
 import vtk from 'vtk.js/Sources/vtk';
+import DataSet from 'vtk.js/Sources/Common/DataModel/DataSet';
 
 
 
@@ -58,16 +59,21 @@ class K_Manager{
         const fileReader = new FileReader();
         const stlReader = vtkSTLReader.newInstance();
         fileReader.onload = async e=>{
-            // stlReader.parseAsArrayBuffer(fileReader.result);
-            // stlReader.update();
-            // const polydata = stlReader.getOutputData();
 
+            const startTime = new Date()
             
-            const args = ['thread.stl', 'thread.json'];
-            const outputType = [{path : args[1], type : IOTypes.vtkPolyData}];                        
-            const inputs = [{path : args[0], type : IOTypes.Binary, data : new Uint8Array(fileReader.result) }]
-            const result = await runPipelineBrowser(null, 'stlReader', args, outputType, inputs);            
-            const polydata = vtk(result.outputs[0].data);
+            stlReader.parse(fileReader.result);
+            stlReader.update();
+            const polydata = stlReader.getOutputData();
+            
+            // const args = ['thread.stl', 'thread.json'];
+            // const outputType = [{path : args[1], type : IOTypes.vtkPolyData}];                        
+            // const inputs = [{path : args[0], type : IOTypes.Binary, data : new Uint8Array(fileReader.result) }]
+            // const result = await runPipelineBrowser(null, 'stlReader', args, outputType, inputs);            
+            // const polydata = vtk(result.outputs[0].data);
+            
+            console.log((new Date() - startTime) / 1000);
+
 
 
             const mapper = vtkMapper.newInstance({scalarVisibility:false});
@@ -82,7 +88,7 @@ class K_Manager{
         }
 
         
-        fileReader.readAsArrayBuffer(file);
+        fileReader.readAsText(file);
 
 
 
